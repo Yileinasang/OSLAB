@@ -75,13 +75,14 @@ typedef int tid_t;
    the `magic' member of the running thread's `struct thread' is
    set to THREAD_MAGIC.  Stack overflow will normally change this
    value, triggering the assertion. */
-   /** The `elem' member has a dual purpose.  It can be an element in
+/** The `elem' member has a dual purpose.  It can be an element in
    the run queue (thread.c), or it can be an element in a
    semaphore wait list (synch.c).  It can be used these two ways
    only because they are mutually exclusive: only a thread in the
    ready state is on the run queue, whereas only a thread in the
    blocked state is on a semaphore wait list. */
-struct thread
+
+   struct thread
   {
     /* Owned by thread.c. */
     tid_t tid;                          /**< Thread identifier. */
@@ -98,7 +99,6 @@ struct thread
 #ifdef USERPROG
     /* Owned by userprog/process.c. */
     uint32_t *pagedir;                  /**< Page directory. */
-    struct process_control_block *process;
 #endif
 
     /* Owned by thread.c. */

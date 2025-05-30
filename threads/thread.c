@@ -231,12 +231,6 @@ thread_create (const char *name, int priority,
   sf->eip = switch_entry;
   sf->ebp = 0;
 
-#ifdef USERPROG
-  t->process = process_create(t);
-  if(t->process == NULL)
-    return TID_ERROR;
-#endif
-
   /* Add to run queue. */
   thread_unblock (t);
   thread_yield();
@@ -354,6 +348,7 @@ thread_yield (void)
   schedule ();
   intr_set_level (old_level);
 }
+
 
 /** Invoke function 'func' on all threads, passing along 'aux'.
    This function must be called with interrupts off. */
@@ -656,7 +651,7 @@ allocate_tid (void)
 
   return tid;
 }
-
+
 /** Offset of `stack' member within `struct thread'.
    Used by switch.S, which can't figure it out on its own. */
 uint32_t thread_stack_ofs = offsetof (struct thread, stack);
